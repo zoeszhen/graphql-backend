@@ -1,6 +1,11 @@
 const { ApolloServer, UserInputError, gql } = require('apollo-server')
+// Load Chance
+var Chance = require('chance');
+// Instantiate Chance so it can be used
+var chance = new Chance();
 
 const uuid = require('uuid/v1')
+
 
 let persons = [
   {
@@ -25,26 +30,20 @@ let persons = [
   },
 ]
 
-let authors = [
-  {
-    name: "Arto Hellas",
-    born: "1988",
-    bookCount: 5,
-    id: "3d594650-3436-11e9-bc57-8b80ba54c431"
-  },
-  {
-    name: "Matti Luukkainen",
-    born: "1988",
-    bookCount: 4,
-    id: '3d599470-3436-11e9-bc57-8b80ba54c431'
-  },
-  {
-    name: "Venla Ruuska",
-    born: "1978",
-    bookCount: 1,
-    id: '3d599471-3436-11e9-bc57-8b80ba54c431'
-  }
-]
+let authors = Array.from({ length: 10 }, (_, i) => ({
+  name: chance.name(),
+  born: chance.year(),
+  bookCount: chance.integer({ min: 1, max: 5 }),
+  id: chance.guid()
+}))
+
+// console.log("authors", authors)
+// let books = Array.from({ length: 10 }, (_, i) => ({
+//   title: chance.sentence(),
+//   author: chance.name(),
+//   published: chance.year(),
+//   id: chance.guid()
+// }))
 
 const typeDefs = gql`
   type Person {

@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^2.10.1",
+    "chance": "^1.1.7",
     "graphql": "^14.6.0",
     "nodemon": "^2.0.2",
     "uuid": "^3.4.0"
