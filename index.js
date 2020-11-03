@@ -37,13 +37,12 @@ let authors = Array.from({ length: 10 }, (_, i) => ({
   id: chance.guid()
 }))
 
-// console.log("authors", authors)
-// let books = Array.from({ length: 10 }, (_, i) => ({
-//   title: chance.sentence(),
-//   author: chance.name(),
-//   published: chance.year(),
-//   id: chance.guid()
-// }))
+let books = Array.from({ length: 10 }, (_, i) => ({
+  title: chance.sentence(),
+  author: chance.name(),
+  published: chance.year(),
+  id: chance.guid()
+}))
 
 const typeDefs = gql`
   type Person {
@@ -56,6 +55,12 @@ const typeDefs = gql`
     name: String!
     born: String
     bookCount: Int!
+    id: ID!
+  }
+  type Book {
+    title: String!
+    author: String!
+    published: Int!
     id: ID!
   }
   type Address {
@@ -71,6 +76,7 @@ const typeDefs = gql`
     allPersons(phone: YesNo): [Person!]!
     findPerson(name: String!): Person
     allAuthors: [Author!]!
+    allBooks: [Book!]!
   }
   type Mutation {
     addPerson(
@@ -101,7 +107,8 @@ const resolvers = {
     },
     findPerson: (root, args) =>
       persons.find(p => p.name === args.name),
-    allAuthors: () => authors
+    allAuthors: () => authors,
+    allBooks: () => books
   },
 
   Person: {
